@@ -39,6 +39,10 @@ const scrollToSection = (id) => {
   const section = document.getElementById(id);
   section.scrollIntoView({ behavior: 'smooth' });
 };
+
+const getSectionInView = () => {
+  return document.querySelector('.active');
+};
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -74,3 +78,20 @@ createNavbarList();
 // Scroll to section on link click
 onNavClickHandler();
 // Set sections as active
+window.onscroll = function () {
+  for (const section of sections) {
+    const distanceToTop = section.getBoundingClientRect().top;
+    const activeSection = getSectionInView();
+    if (distanceToTop > -300) {
+      if (section.classList.contains('active')) {
+        break;
+      } else {
+        section.classList.add('active');
+        if (activeSection) {
+          activeSection.classList.remove('active');
+        }
+      }
+      break;
+    }
+  }
+};
